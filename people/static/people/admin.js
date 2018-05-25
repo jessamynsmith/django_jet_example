@@ -80,9 +80,6 @@ $(document).ready(function() {
         valid = valid && checkLength( tagField, "tag", 2, 160 );
 
       if ( valid ) {
-        console.log("VALID");
-
-
         var data = {
           tag_value: tagField.val(),
           person: personId
@@ -90,6 +87,7 @@ $(document).ready(function() {
         doAjax("/api/v1/persontag/", "POST", null, data);
         personId = null;
         dialog.dialog( "close" );
+        location.reload();
       }
       return valid;
     }

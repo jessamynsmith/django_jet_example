@@ -12,7 +12,7 @@ class CustomIndexDashboard(Dashboard):
             _('Support'),
             children=[
                 {
-                    'title': _('!!!Django !!! documentation'),
+                    'title': _('Django documentation'),
                     'url': 'http://docs.djangoproject.com/',
                     'external': True,
                 },

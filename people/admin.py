@@ -5,11 +5,16 @@ from people import models
 
 
 class PeopleAdmin(admin.ModelAdmin):
-    list_display = ('name', 'button')
+    list_display = ('name', 'tags', 'button')
 
     class Media:
         js = ('people/admin.js',
               'https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.0/js.cookie.min.js')
+
+    def tags(self, *args, **kwargs):
+        person = args[0]
+        person_tags = person.persontag_set.values_list('tag__value', flat=True)
+        return ', '.join(person_tags)
 
     def button(self, *args, **kwargs):
         html = """
