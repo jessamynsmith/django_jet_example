@@ -134,7 +134,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-JET_INDEX_DASHBOARD = 'django_jet_example.dashboard.CustomIndexDashboard'
+JET_INDEX_DASHBOARD = 'people.dashboard.CustomIndexDashboard'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
