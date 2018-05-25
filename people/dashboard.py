@@ -15,17 +15,23 @@ class TagPopularityChart(DashboardModule):
     title = _('Tag popularity chart')
     template = 'dashboard/modules/tag_popularity_chart.html'
     style = 'overflow-x: auto;'
+    max_chart_items = 4
 
     class Media:
-        js = ('jet.dashboard/vendor/chart.js/Chart.min.js', 'people/tag_popularity_chart.js')
+        js = (
+            'people/tag_popularity_chart.js',
+        )
 
     def init_with_context(self, context):
-        result = people_models.PersonTag.objects.values('tag__value').annotate(tag_count=Count('tag__value'))
+        result = people_models.PersonTag.objects.values('tag__value').annotate(
+            tag_count=Count('tag__value')).order_by('-tag_count')
 
+        count = 0
         for data in result:
             self.children.append((data['tag__value'], data['tag_count']))
-
-        print(self.children)
+            if count >= self.max_chart_items:
+                break
+            count = count + 1
 
 
 class CustomIndexDashboard(Dashboard):
@@ -71,7 +77,7 @@ class CustomIndexDashboard(Dashboard):
         ))
 
         self.children.append(TagPopularityChart(
-            _('Tags'),
+            _('Tag Popularity'),
             column=1,
             order=0
         ))

@@ -8,21 +8,17 @@
     </ul>
 {% elif module.children %}
     <div class="padding center">
-        <canvas id="chart_{{ module.model.pk }}" style="width: 100%;">
+        <canvas id="chart_tag_popularity" style="width: 100%;">
             <div class="chart-fillColor"></div>
             <div class="chart-strokeColor"></div>
-            <div class="chart-pointColor"></div>
-            <div class="chart-pointHighlightFill"></div>
-            <div class="chart-scaleGridLineColor"></div>
-            <div class="chart-scaleLineColor"></div>
-            <div class="chart-scaleFontColor"></div>
             <div class="chart-data">
                 {% for data in module.children %}
                     <div class="chart-data-item" data-tag="{{ data.0 }}" data-count="{{ data.1 }}"></div>
                 {% endfor %}
             </div>
         </canvas>
-        <script>jet.jQuery('#chart_{{ module.model.pk }}').tagPopularityChart();</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+        <script>jet.jQuery('#chart_tag_popularity').tagPopularityChart();</script>
     </div>
 {% else %}
     <ul>
