@@ -9,6 +9,18 @@ class CustomIndexDashboard(Dashboard):
     def init_with_context(self, context):
         self.available_children.append(modules.LinkList)
         self.children.append(modules.LinkList(
+            _('Resources'),
+            children=[
+                {
+                    'title': _('Source code'),
+                    'url': 'https://github.com/jessamynsmith/django_jet_example',
+                    'external': True,
+                },
+            ],
+            column=0,
+            order=0
+        ))
+        self.children.append(modules.LinkList(
             _('Support'),
             children=[
                 {
