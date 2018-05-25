@@ -31,3 +31,5 @@ class PeopleAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Person, PeopleAdmin)
+admin.site.register(models.Tag)
+admin.site.register(models.PersonTag)

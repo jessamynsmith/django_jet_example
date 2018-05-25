@@ -39,7 +39,6 @@ $(document).ready(function() {
 
     $('.dialog-form').dialog({
           autoOpen: false,
-          // height: 400,
           width: 350,
           modal: true,
           buttons: {
@@ -49,7 +48,6 @@ $(document).ready(function() {
             }
           },
           close: function() {
-            // form.reset();
             allFields.removeClass( "ui-state-error" );
           }
         });
@@ -86,10 +84,10 @@ $(document).ready(function() {
 
 
         var data = {
-          tag: tagField.val(),
-          to_number: personId
+          tag_value: tagField.val(),
+          person: personId
         };
-        doAjax("/api/v1/people/", "POST", null, data);
+        doAjax("/api/v1/persontag/", "POST", null, data);
         personId = null;
         dialog.dialog( "close" );
       }
@@ -103,11 +101,9 @@ $(document).ready(function() {
     });
 
     $('.tag_button').on('click', function(evt) {
-        console.log('clicked');
-
         // Get the to phone number for this row
         var row = $(this).closest('tr[class^="row"]');
-        personId = row.find('a').text();
+        personId = row.find('[name="_selected_action"]').val();
 
         // populate the to number in the form and open the dialog
         dialog = $($('.dialog-form')[0]);
