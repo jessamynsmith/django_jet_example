@@ -1,0 +1,7 @@
+.sidebar-container-toggle::after, #site-name::before {
+    content: "\00a0\00a0\00a0\00a0\00a0";
+    background-image:url('http://127.0.0.1:8000/static/django_jet_example/img/rainbow.png');
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-position: center;
+}
