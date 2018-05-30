@@ -1,5 +1,6 @@
 from collections import OrderedDict
 import datetime
+import pytz
 
 from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
@@ -9,6 +10,10 @@ from jet.dashboard.dashboard import Dashboard
 from jet.dashboard.modules import DashboardModule
 
 from people import models as people_models
+
+
+# This matches the timezone in templates/admin/change_list.html
+TIMEZONE = pytz.timezone("America/Edmonton")
 
 
 class TagPopularityChart(DashboardModule):
@@ -55,19 +60,24 @@ class TagsOverTimeChart(DashboardModule):
 
     def init_with_context(self, context):
         start_time = timezone.now() - datetime.timedelta(hours=self.hours)
+        # Make minutes, seconds, and microseconds zero to match date_trunc results
+        start_time = start_time.replace(minute=0, second=0, microsecond=0)
+
         result = people_models.PersonTag.objects.filter(created_at__gt=start_time).extra(
-            select={'hour': "date_part(\'hour\', \"created_at\")"}).values('hour').order_by('hour')
+            select={'hour': "date_trunc(\'hour\', \"created_at\")"}).values('hour').order_by('hour')
 
         results_dict = OrderedDict()
         for hour in range(1, self.hours + 1):
             current = start_time + datetime.timedelta(hours=hour)
-            results_dict[int(current.hour)] = 0
+            results_dict[current] = 0
 
         for data in result:
-            results_dict[int(data['hour'])] += 1
+            results_dict[data['hour']] += 1
 
         for key, value in results_dict.items():
-            self.children.append((key, value))
+            # Display times in user timezone rather than UTC
+            localized_time = key.astimezone(TIMEZONE)
+            self.children.append((localized_time.hour, value))
 
 
 class CustomIndexDashboard(Dashboard):

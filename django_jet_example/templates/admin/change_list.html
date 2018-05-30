@@ -38,7 +38,9 @@
 {% block coltype %}flex{% endblock %}
 
 {% block content %}
-  {% timezone "America/Vancouver" %}
+  <!-- This matches the timezone in dashboard.py -->
+  {% timezone "America/Edmonton" %}
+
   <div id="content-main">
     {% block object-tools %}
         <ul class="object-tools">
@@ -87,5 +89,6 @@
       </form>
     </div>
   </div>
-    {% endtimezone %}
+
+  {% endtimezone %}
 {% endblock %}
