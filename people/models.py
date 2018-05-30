@@ -18,6 +18,7 @@ class Tag(models.Model):
 class PersonTag(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = (('person', 'tag'),)

@@ -4,7 +4,7 @@ from django.utils.safestring import mark_safe
 from people import models
 
 
-class PeopleAdmin(admin.ModelAdmin):
+class PersonAdmin(admin.ModelAdmin):
     list_display = ('name', 'tags', 'button')
 
     class Media:
@@ -35,6 +35,10 @@ class PeopleAdmin(admin.ModelAdmin):
     button.allow_tags = True
 
 
-admin.site.register(models.Person, PeopleAdmin)
+class PersonTagAdmin(admin.ModelAdmin):
+    list_display = ('person', 'tag', 'created_at')
+
+
+admin.site.register(models.Person, PersonAdmin)
 admin.site.register(models.Tag)
-admin.site.register(models.PersonTag)
+admin.site.register(models.PersonTag, PersonTagAdmin)
